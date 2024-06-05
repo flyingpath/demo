@@ -5,7 +5,8 @@ import './index.css'
 
 const navList = [
   { label: '首頁', route: 'home' },
-  { label: '登入', route: 'login' },
+  { label: '訂單資訊', route: 'shipment' },
+  { label: '登入', route: 'login', isHide: true },
   { label: '登出', route: 'logout' },
 ]
 
@@ -19,27 +20,37 @@ function Navigator(props) {
 
   return (
     <div className='navigator'>
-      {navList.map((nav, index) => (
-        <Button
-          key={index}
-          UNSAFE_className='nav'
-          variant='accent'
-          onPress={() => {
-            if (nav.label === '登出') {
-              if (localStorage.getItem('token')) {
-                localStorage.removeItem('token')
-                alert('登出成功')
-                props.setRoute('home')
+      {navList
+        .filter((n) => {
+          if (n.isHide) {
+            return false
+          }
+          if (n.label === '登出') {
+            return !!localStorage.getItem('token')
+          }
+          return true
+        })
+        .map((nav, index) => (
+          <Button
+            key={index}
+            UNSAFE_className='nav'
+            variant='accent'
+            onPress={() => {
+              if (nav.label === '登出') {
+                if (localStorage.getItem('token')) {
+                  localStorage.removeItem('token')
+                  alert('登出成功')
+                  props.setRoute('home')
+                }
+                return
               }
-              return
-            }
-            handleChange(nav.route)
-          }}
-          style={props.route === nav.route ? 'fill' : 'outline'}
-        >
-          {nav.label}
-        </Button>
-      ))}
+              handleChange(nav.route)
+            }}
+            style={props.route === nav.route ? 'fill' : 'outline'}
+          >
+            {nav.label}
+          </Button>
+        ))}
     </div>
   )
 }

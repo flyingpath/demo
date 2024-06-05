@@ -4,4 +4,15 @@
   flex-direction: row;
   justify-content: center;
   margin-top: 50px;
+  position: relative;
+}
+
+.info {
+  position: absolute;
+  right: 50px;
+  top: -30px;
+}
+
+.info-content {
+  height: 150px;
 }

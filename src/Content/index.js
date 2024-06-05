@@ -7,19 +7,18 @@ function Content(props) {
 
   if (route === 'home') return <div className='content'>簡單的公司資訊</div>
 
-  const isLogin = localStorage.getItem('token')
-
   if (route === 'login') {
-    if (!isLogin) {
-      return (
-        <div className='content'>
-          <LoginForm setRoute={setRoute} />
-        </div>
-      )
-    } else {
-      return <Main />
-    }
+    return (
+      <div className='content'>
+        <LoginForm setRoute={setRoute} />
+      </div>
+    )
   }
+
+  if (route === 'shipment') {
+    return <Main setRoute={setRoute} />
+  }
+
   return null
 }
 
